@@ -5,7 +5,7 @@ class ComandasController < ApplicationController
   def index
     @comandas = Comanda.all
 
-    render json: @comandas
+    render json: @comandas, include: 'usuario', except: 'usuario_id'
   end
 
   # GET /comandas/1
@@ -46,6 +46,6 @@ class ComandasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def comanda_params
-      params.fetch(:comanda, {})
+      params.fetch(:comanda, {}).permit(:usuario_id)
     end
 end
