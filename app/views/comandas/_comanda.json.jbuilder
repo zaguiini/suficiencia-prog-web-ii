@@ -1,13 +1,16 @@
 json.id comanda.id
 
-json.usuario { json.extract! comanda.usuario, :id, :nome, :telefone }
+json.usuario do
+  json.usuario_id comanda.usuario.id
+  json.extract! comanda.usuario, :nome, :telefone
+end
 
-json.produtos(comanda.produtos) do |comanda_produto|
-  produto = comanda_produto.produto
+json.itens(comanda.itens) do |item|
+  produto = item.produto
 
-  json.id comanda_produto.id
-
+  json.item_id item.id
+  json.produto_id produto.id
   json.nome produto.nome
-  json.quantidade comanda_produto.quantidade.to_i
+  json.quantidade item.quantidade.to_i
   json.preco_unitario produto.preco.to_f
 end

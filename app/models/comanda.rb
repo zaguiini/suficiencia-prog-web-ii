@@ -1,21 +1,22 @@
 class Comanda < ApplicationRecord
   belongs_to :usuario
-  has_many :produtos, class_name: 'ComandaProduto'
-  has_many :produtos_simples, through: :produtos, source: :produto, autosave: true
 
-  accepts_nested_attributes_for :produtos, reject_if: :blank_produto_fields?
+  has_many :itens, class_name: 'ComandaItem'
+  has_many :produtos, through: :itens, autosave: true
 
-  validates_associated :produtos
+  accepts_nested_attributes_for :itens, reject_if: :blank_item_fields?
 
-  validate :produtos_length
+  validates_associated :itens
 
-  def produtos_length
-    errors.add(:produtos, "can't be empty") if produtos.blank?
+  validate :itens_length
+
+  def itens_length
+    errors.add(:itens, "can't be empty") if itens.blank?
   end
 
   private
 
-  def blank_produto_fields?(attributes)
+  def blank_item_fields?(attributes)
     attributes.blank? || attributes['produto_id'].blank? || attributes['quantidade'].blank?
   end
 end

@@ -47,13 +47,13 @@ class ComandasController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def comanda_params
-    params.permit(:usuario_id, produtos: %i[produto_id quantidade])
+    params.permit(:usuario_id, itens: %i[produto_id quantidade])
   end
 
   def comanda_model_params
     {
       usuario_id: comanda_params[:usuario_id],
-      produtos_attributes: comanda_params[:produtos]
+      itens_attributes: comanda_params[:itens]
     }.compact
   end
 end
