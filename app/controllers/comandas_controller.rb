@@ -15,7 +15,6 @@ class ComandasController < ApplicationController
 
   # POST /comandas
   def create
-    # require 'pry'; binding.pry
     @comanda = Comanda.new(comanda_model_params)
 
     if @comanda.save
@@ -27,14 +26,7 @@ class ComandasController < ApplicationController
 
   # PATCH/PUT /comandas/1
   def update
-    params = comanda_params
-    usuario_id = params[:usuario_id] || @comanda.usuario.id
-    comanda_produtos = params[:produtos] || []
-
-    if @comanda.update({
-                           usuario_id: usuario_id,
-                           comanda_produtos: @comanda.comanda_produtos + comanda_produtos
-                       })
+    if @comanda.update(comanda_model_params)
       render 'comandas/update'
     else
       render json: @comanda.errors, status: :unprocessable_entity
@@ -61,7 +53,7 @@ class ComandasController < ApplicationController
   def comanda_model_params
     {
       usuario_id: comanda_params[:usuario_id],
-      comanda_produtos_attributes: comanda_params[:produtos] || []
-    }
+      produtos_attributes: comanda_params[:produtos]
+    }.compact
   end
 end
