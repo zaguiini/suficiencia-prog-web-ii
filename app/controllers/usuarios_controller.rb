@@ -5,12 +5,12 @@ class UsuariosController < ApplicationController
   def index
     @usuarios = Usuario.all
 
-    render json: @usuarios
+    render 'usuarios/index'
   end
 
   # GET /usuarios/1
   def show
-    render json: @usuario
+    render 'usuarios/show'
   end
 
   # POST /usuarios
@@ -18,7 +18,7 @@ class UsuariosController < ApplicationController
     @usuario = Usuario.new(usuario_params)
 
     if @usuario.save
-      render json: @usuario, status: :created, location: @usuario
+      render 'usuarios/create', status: :created
     else
       render json: @usuario.errors, status: :unprocessable_entity
     end
@@ -26,8 +26,8 @@ class UsuariosController < ApplicationController
 
   # PATCH/PUT /usuarios/1
   def update
-    if @usuario.update(usuario_params)
-      render json: @usuario
+    if @usuario.update(usuario_params.to_h.compact)
+      render 'usuarios/update'
     else
       render json: @usuario.errors, status: :unprocessable_entity
     end
@@ -47,6 +47,6 @@ class UsuariosController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def usuario_params
-    params.require(:usuario).permit(:nome, :telefone)
+    params.except(:usuario).permit(:nome, :telefone)
   end
 end
