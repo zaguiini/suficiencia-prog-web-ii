@@ -5,12 +5,12 @@ class ProdutosController < ApplicationController
   def index
     @produtos = Produto.all
 
-    render json: @produtos
+    render 'produtos/index'
   end
 
   # GET /produtos/1
   def show
-    render json: @produto
+    render 'produtos/show'
   end
 
   # POST /produtos
@@ -18,7 +18,7 @@ class ProdutosController < ApplicationController
     @produto = Produto.new(produto_params)
 
     if @produto.save
-      render json: @produto, status: :created, location: @produto
+      render 'produtos/create', status: :created
     else
       render json: @produto.errors, status: :unprocessable_entity
     end
@@ -26,8 +26,8 @@ class ProdutosController < ApplicationController
 
   # PATCH/PUT /produtos/1
   def update
-    if @produto.update(produto_params)
-      render json: @produto
+    if @produto.update(produto_params.to_h.compact)
+      render 'produtos/update'
     else
       render json: @produto.errors, status: :unprocessable_entity
     end
@@ -47,6 +47,6 @@ class ProdutosController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def produto_params
-    params.require(:produto).permit(:nome, :preco)
+    params.permit(:nome, :preco)
   end
 end
