@@ -1,11 +1,11 @@
 class ComandasController < ApplicationController
-  before_action :set_comanda, only: [:show, :update, :destroy]
+  before_action :set_comanda, only: %i[show update destroy]
 
   # GET /comandas
   def index
     @comandas = Comanda.all
 
-    render json: @comandas, include: 'usuario', except: 'usuario_id'
+    render json: @comandas
   end
 
   # GET /comandas/1
@@ -15,7 +15,14 @@ class ComandasController < ApplicationController
 
   # POST /comandas
   def create
-    @comanda = Comanda.new(comanda_params)
+    params = comanda_params
+
+    @comanda = Comanda.new({
+                             usuario_id: params[:usuario_id],
+                             comanda_produtos: params[:comanda_produtos].each do |produto|
+                               ComandaProduto.new(produto)
+                             end
+                           })
 
     if @comanda.save
       render json: @comanda, status: :created, location: @comanda
@@ -39,13 +46,14 @@ class ComandasController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comanda
-      @comanda = Comanda.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def comanda_params
-      params.fetch(:comanda, {}).permit(:usuario_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_comanda
+    @comanda = Comanda.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def comanda_params
+    params.require(:comanda).permit(:usuario_id, comanda_produtos: %i[produto_id quantidade])
+  end
 end
