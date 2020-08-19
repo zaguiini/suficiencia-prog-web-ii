@@ -10,12 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_225532) do
+ActiveRecord::Schema.define(version: 2020_08_19_010738) do
 
   create_table "comanda_produtos", force: :cascade do |t|
     t.decimal "quantidade"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "produto_id"
+    t.integer "comanda_id"
+    t.index ["comanda_id"], name: "index_comanda_produtos_on_comanda_id"
+    t.index ["produto_id"], name: "index_comanda_produtos_on_produto_id"
   end
 
   create_table "comandas", force: :cascade do |t|

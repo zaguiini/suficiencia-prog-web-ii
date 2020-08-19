@@ -5,12 +5,12 @@ class ComandasController < ApplicationController
   def index
     @comandas = Comanda.all
 
-    render json: @comandas
+    render 'comandas/index'
   end
 
   # GET /comandas/1
   def show
-    render json: @comanda
+    render 'comandas/show'
   end
 
   # POST /comandas
@@ -19,13 +19,13 @@ class ComandasController < ApplicationController
 
     @comanda = Comanda.new({
                              usuario_id: params[:usuario_id],
-                             comanda_produtos: params[:comanda_produtos].each do |produto|
+                             comanda_produtos: params[:comanda_produtos].map do |produto|
                                ComandaProduto.new(produto)
                              end
                            })
 
     if @comanda.save
-      render json: @comanda, status: :created, location: @comanda
+      render 'comandas/create', status: :created
     else
       render json: @comanda.errors, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class ComandasController < ApplicationController
   # PATCH/PUT /comandas/1
   def update
     if @comanda.update(comanda_params)
-      render json: @comanda
+      render 'comandas/update'
     else
       render json: @comanda.errors, status: :unprocessable_entity
     end
