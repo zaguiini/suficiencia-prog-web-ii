@@ -8,6 +8,9 @@ class Usuario < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
+  validates :nome, length: { minimum: 1 }
+  validates :telefone, length: { is: 11 }
+
   validate :check_role
 
   @@roles.each do |role_name|
