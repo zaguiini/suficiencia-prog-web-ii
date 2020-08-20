@@ -12,5 +12,10 @@ json.itens(comanda.itens) do |item|
   json.produto_id produto.id
   json.nome produto.nome
   json.quantidade item.quantidade.to_i
-  json.preco_unitario produto.preco.to_f
+  json.preco item.preco.to_f
+  json.observacoes item.observacoes
 end
+
+json.preco_total (comanda.itens.reduce(0) do |soma, item|
+  soma + item.preco.to_f * item.quantidade
+end).to_f

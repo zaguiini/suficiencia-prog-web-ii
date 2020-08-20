@@ -1,13 +1,11 @@
 class Comanda < ApplicationRecord
   belongs_to :usuario
-
   has_many :itens, class_name: 'ComandaItem'
-  has_many :produtos, through: :itens, autosave: true
+  has_many :produtos, through: :itens
 
   accepts_nested_attributes_for :itens, reject_if: :blank_item_fields?
 
   validates_associated :itens
-
   validate :itens_length
 
   def itens_length
