@@ -1,4 +1,5 @@
 class ComandasController < ApplicationController
+  before_action :authenticate_usuario!
   before_action :set_comanda, only: %i[show update destroy]
 
   # GET /comandas
