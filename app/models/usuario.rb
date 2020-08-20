@@ -1,4 +1,5 @@
 class Usuario < ApplicationRecord
+  # I would use rolify or pundit if I had more time :)
   @@roles = %i[admin customer].freeze
 
   # Include default devise modules. Others available are:

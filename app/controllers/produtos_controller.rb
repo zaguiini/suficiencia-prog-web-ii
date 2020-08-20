@@ -1,4 +1,6 @@
 class ProdutosController < ApplicationController
+  authorize_resource
+
   before_action :authenticate_usuario!
   before_action :set_produto, only: [:show, :update, :destroy]
 
@@ -19,9 +21,9 @@ class ProdutosController < ApplicationController
     @produto = Produto.new(produto_params)
 
     if @produto.save
-      render 'produtos/create', status: :created
+      render 'produtos/create'
     else
-      render json: @produto.errors, status: :unprocessable_entity
+      render json: @produto.errors, status: :bad_request
     end
   end
 
@@ -30,7 +32,7 @@ class ProdutosController < ApplicationController
     if @produto.update(produto_params.to_h.compact)
       render 'produtos/update'
     else
-      render json: @produto.errors, status: :unprocessable_entity
+      render json: @produto.errors, status: :bad_request
     end
   end
 

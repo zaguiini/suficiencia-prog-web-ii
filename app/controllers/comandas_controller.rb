@@ -1,10 +1,12 @@
 class ComandasController < ApplicationController
+  authorize_resource
+
   before_action :authenticate_usuario!
   before_action :set_comanda, only: %i[show update destroy]
 
   # GET /comandas
   def index
-    @comandas = Comanda.all
+    @comandas = Comanda.accessible_by(current_ability)
 
     render 'comandas/index'
   end
@@ -19,9 +21,9 @@ class ComandasController < ApplicationController
     @comanda = Comanda.new(comanda_model_params)
 
     if @comanda.save
-      render 'comandas/create', status: :created
+      render 'comandas/create'
     else
-      render json: @comanda.errors, status: :unprocessable_entity
+      render json: @comanda.errors, status: :bad_request
     end
   end
 
@@ -30,7 +32,7 @@ class ComandasController < ApplicationController
     if @comanda.update(comanda_model_params)
       render 'comandas/update'
     else
-      render json: @comanda.errors, status: :unprocessable_entity
+      render json: @comanda.errors, status: :bad_request
     end
   end
 
@@ -48,12 +50,14 @@ class ComandasController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def comanda_params
-    params.except(:comanda, :id).permit(:usuario_id, itens: %i[id produto_id quantidade preco observacoes])
+    permissions = [*(:usuario_id if current_user.is_admin?), itens: %i[id produto_id quantidade preco observacoes]]
+
+    params.except(:comanda, :id).permit(permissions)
   end
 
   def comanda_model_params
     {
-      usuario_id: comanda_params[:usuario_id],
+      usuario_id: comanda_params[:usuario_id] || current_user.id,
       itens_attributes: comanda_params[:itens]
     }.compact
   end
