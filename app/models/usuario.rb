@@ -2,14 +2,14 @@ class Usuario < ApplicationRecord
   # I would use rolify or pundit if I had more time :)
   @@roles = %i[admin customer].freeze
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  alias_attribute :funcao, :role
+
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
   validates :nome, length: { minimum: 1 }
   validates :telefone, length: { is: 11 }
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   validate :check_role
 
@@ -22,6 +22,11 @@ class Usuario < ApplicationRecord
   private
 
   def check_role
-    errors.add(:role, 'invalid role') unless @@roles.include?(role.to_sym)
+    if funcao.nil?
+      errors.add(:funcao, 'must exist')
+      errors.add(:funcao, "must be #{@@roles.to_s}")
+    else
+      errors.add(:funcao, 'invalid role') unless @@roles.include?(funcao.to_sym)
+    end
   end
 end

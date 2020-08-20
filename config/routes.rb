@@ -8,5 +8,6 @@ Rails.application.routes.draw do
 
     resources :comandas
     resources :produtos
+    resources :usuarios, only: %i[index show]
   end
 end

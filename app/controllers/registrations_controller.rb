@@ -5,6 +5,11 @@ class RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
 
     resource.save
-    render_resource(resource)
+
+    render 'usuarios/create'
+  end
+
+  def sign_up_params
+    params.except(:usuario).permit(%i[email nome telefone funcao])
   end
 end

@@ -12,16 +12,11 @@ class ApplicationController < ActionController::API
   end
 
   def validation_error(resource)
-    render json: {
-      status: '400',
-      title: 'Bad Request',
-      detail: resource.errors
-    }, status: :bad_request
+    render json: resource.errors, status: :bad_request
   end
 
   rescue_from CanCan::AccessDenied do
     render json: {
-      status: 403,
       error: "You can't access this resource"
     }, status: :forbidden
   end
