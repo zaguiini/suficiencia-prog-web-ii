@@ -61,4 +61,6 @@ Você vai receber o access token que está na resposta da requisição no header
 - Quando você cria uma comanda, o preço atual do produto é copiado e salvo no item da comanda. Isso previne que no futuro o preço do produto mude e acabe mudando em todas as comandas que aquele produto está incluído. Fora isso, é possível também especificar um preço customizado junto com possíveis observações em cada item da comanda;
 - Está muito bom. Eu poderia fazer algumas melhorias mas o tempo ficou curto. Difícil conciliar trabalho, faculdade e projeto de suficiência. Se tivesse mais tempo teria mais cuidado com alguns modelos de requisição e resposta e implementaria uma solução melhor em relação às tarefas de cada usuário no sistema, além de realizar testes unitários para garantir o fluxo esperado.
 
+---
+
 Em caso de qualquer dúvida, por favor me contate pelo e-mail da Furb. Obrigado!
