@@ -25,6 +25,34 @@ Também na porta `8080`.
 
 Na rota `http://localhost:8080/api-docs` ou em `./swagger/v1/swagger.yaml`.
 
+## Dados padrão
+
+### Usuários
+
+- `gerente@lanchonete.com:123456` - administrador;
+- `ze@lanchonete.com:123456` - cliente;
+- `joao@lanchonete.com:123456` - cliente.
+
+### Produtos
+
+- X-Salada: R$ 7,00;
+- X-Bacon: R$ 9,00.
+
+## Como logar
+
+Requisição `POST` para `/RestAPIFurb/usuarios/sign_in`:
+
+```json
+{
+  "usuario": {
+    "email": "",
+    "password: ""
+  }
+}
+```
+
+Você vai receber o access token que está na resposta da requisição no header `Authorization`. As rotas de produtos comeandas e usuários (no caso de gerente) necessitam desse access token, que deve ser passado da mesma maneira na requisição desejada: `Authorization: Bearer token_aqui`;
+
 ## Notas
 
 - Eu não fiz exatamente como foi pedido. Utilizei de minha experiência em construção de APIs para melhores tomadas de decisão;
