@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Usuario.create(nome: 'Zé', email: 'ze@lanchonete.com', password: '123456', telefone: '47999999999', role: :customer)
-Usuario.create(nome: 'João', email: 'joao@lanchonete.com', password: '123456', telefone: '47988888888', role: :customer)
+Usuario.create(nome: 'Maria', email: 'maria@lanchonete.com', password: '123456', telefone: '47988888888', role: :customer)
 
 Usuario.create(nome: 'Gerente', email: 'gerente@lanchonete.com', password: '123456', telefone: '47900000000', role: :admin)
 
