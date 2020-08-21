@@ -103,7 +103,8 @@ RSpec.describe 'api/comandas', type: :request do
 
       parameter name: :id, in: :path, type: :number
 
-      response '204', 'Comanda apagada' do
+      response '200', 'Comanda apagada' do
+        schema '$ref' => '#/components/schemas/recurso_apagado'
         run_test!
       end
     end

@@ -39,6 +39,8 @@ class ProdutosController < ApplicationController
   # DELETE /produtos/1
   def destroy
     @produto.destroy
+
+    render 'produtos/destroy'
   end
 
   private

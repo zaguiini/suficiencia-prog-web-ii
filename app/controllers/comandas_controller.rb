@@ -39,6 +39,8 @@ class ComandasController < ApplicationController
   # DELETE /comandas/1
   def destroy
     @comanda.destroy
+
+    render 'comandas/destroy'
   end
 
   private

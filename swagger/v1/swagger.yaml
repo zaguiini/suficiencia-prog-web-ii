@@ -83,6 +83,14 @@ components:
           type: integer
         observacoes:
           type: string
+    recurso_apagado:
+      type: object
+      properties:
+        sucess:
+          type: object
+          properties:
+            text:
+              type: string
 paths:
   "/comandas":
     get:
@@ -208,9 +216,12 @@ paths:
         schema:
           type: number
       responses:
-        '204':
+        '200':
           description: Comanda apagada
-          content: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/recurso_apagado"
   "/produtos":
     get:
       summary: Listar produtos
@@ -306,9 +317,12 @@ paths:
         schema:
           type: number
       responses:
-        '204':
+        '200':
           description: Produto apagado
-          content: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/recurso_apagado"
   "/usuarios/sign_up":
     post:
       summary: Criar usuário na API

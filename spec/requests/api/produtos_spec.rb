@@ -75,7 +75,8 @@ RSpec.describe 'api/produtos', type: :request do
 
       parameter name: :id, in: :path, type: :number
 
-      response '204', 'Produto apagado' do
+      response '200', 'Produto apagado' do
+        schema '$ref' => '#/components/schemas/recurso_apagado'
         run_test!
       end
     end

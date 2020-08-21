@@ -88,6 +88,17 @@ RSpec.configure do |config|
               preco: { type: :integer },
               observacoes: { type: :string }
             }
+          },
+          recurso_apagado: {
+            type: 'object',
+            properties: {
+              sucess: {
+                type: :object,
+                properties: {
+                  text: { type: 'string' }
+                }
+              }
+            }
           }
         }
       }
