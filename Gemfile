@@ -31,8 +31,12 @@ gem 'rolify'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
+gem 'rswag'
+
 group :development, :test do
   gem 'pry'
+  gem 'rspec-rails'
+  gem 'rswag-specs'
 end
 
 group :development do
