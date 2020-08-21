@@ -20,4 +20,10 @@ class ApplicationController < ActionController::API
       error: "You can't access this resource"
     }, status: :forbidden
   end
+
+  rescue_from ActiveRecord::RecordNotFound do
+    render json: {
+      error: 'Resource not found'
+    }, status: :not_found
+  end
 end

@@ -11,10 +11,12 @@ RUN bundle install --no-binstubs --jobs $(nproc) --retry 3
 
 COPY . .
 
-RUN rm -rf ./db/development.sqlite3
+RUN rm -rf ./db/*.sqlite3
 
 RUN bundle exec rails db:create
 RUN bundle exec rails db:migrate
 RUN bundle exec rails db:seed
+
+RUN bundle exec rails rswag:specs:swaggerize
 
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]

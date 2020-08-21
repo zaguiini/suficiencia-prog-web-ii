@@ -1,37 +1,281 @@
 ---
 openapi: 3.0.1
 info:
-  title: API V1
+  title: RestAPIFurb
   version: v1
+servers:
+- url: http://localhost:8080/RestAPIFurb
+components:
+  schemas:
+    produto:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        preco:
+          type: integer
+    comanda:
+      type: object
+      properties:
+        id:
+          type: integer
+        usuario:
+          "$ref": "#/components/schemas/usuario"
+        itens:
+          type: array
+          items:
+            "$ref": "#/components/schemas/item"
+        preco_total:
+          type: integer
+    usuario:
+      type: object
+      properties:
+        usuario_id:
+          type: integer
+        nome:
+          type: string
+        telefone:
+          type: string
+    item:
+      type: object
+      properties:
+        item_id:
+          type: integer
+        produto_id:
+          type: integer
+        nome:
+          type: string
+        quantidade:
+          type: integer
+        preco:
+          type: integer
+        observacoes:
+          type: string
 paths:
-  "/RestAPIFurb":
-    post:
-      summary: Create an Encounter
+  "/comandas":
+    get:
+      summary: Listar comandas
       tags:
-      - Encounters
+      - Comandas
+      responses:
+        '200':
+          description: Comandas recuperadas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/comanda"
+    post:
+      summary: Criar uma comanda
+      tags:
+      - Comandas
+      description: É possível adicionar usuario_id se o usuário logado houver a função
+        "admin"
       parameters: []
       responses:
-        '201':
-          description: encounter created
-          content: {}
-        '422':
-          description: invalid request
-          content: {}
+        '200':
+          description: Comanda criada
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/comanda"
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                patient_id:
-                  type: integer
-                provider_id:
-                  type: integer
+                usuario_id:
+                  type: string
+                itens:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      produto_id:
+                        type: number
+                      quantidade:
+                        type: number
+                      preco:
+                        type: number
+                      observacoes:
+                        type: string
+                    required:
+                    - produto_id
+                    - quantidade
               required:
-              - patient_id
-              - provider_id
-servers:
-- url: https://{defaultHost}
-  variables:
-    defaultHost:
-      default: www.example.com
+              - itens
+  "/comandas/{id}":
+    get:
+      summary: Recuperar uma comanda
+      tags:
+      - Comandas
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Comanda recuperada
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/comanda"
+    put:
+      summary: Editar uma comanda
+      tags:
+      - Comandas
+      description: É possível adicionar usuario_id se o usuário logado houver a função
+        "admin". É possível editar um item da comanda caso o argumento item_id seja
+        enviado
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Comanda atualizada
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/comanda"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                itens:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      item_id:
+                        type: number
+                      produto_id:
+                        type: number
+                      quantidade:
+                        type: number
+                      preco:
+                        type: number
+                      observacoes:
+                        type: string
+    delete:
+      summary: Apagar uma comanda
+      tags:
+      - Comandas
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      responses:
+        '204':
+          description: Comanda apagada
+          content: {}
+  "/produtos":
+    get:
+      summary: Listar produtos
+      tags:
+      - Produtos
+      responses:
+        '200':
+          description: Produtos recuperados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/produto"
+    post:
+      summary: Criar um produto
+      tags:
+      - Produtos
+      parameters: []
+      responses:
+        '200':
+          description: Produto criado
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/produto"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                preco:
+                  type: number
+              required:
+              - nome
+              - preco
+  "/produtos/{id}":
+    get:
+      summary: Recuperar um produto
+      tags:
+      - Produtos
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Produto recuperado
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/produto"
+    put:
+      summary: Editar um produto
+      tags:
+      - Produtos
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Produto atualizado
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/produto"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                preco:
+                  type: number
+    delete:
+      summary: Apagar um produto
+      tags:
+      - Produtos
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      responses:
+        '204':
+          description: Produto apagado
+          content: {}

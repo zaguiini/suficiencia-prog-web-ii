@@ -18,20 +18,57 @@ RSpec.configure do |config|
     'v1/swagger.yaml' => {
       openapi: '3.0.1',
       info: {
-        title: 'API V1',
+        title: 'RestAPIFurb',
         version: 'v1'
       },
-      paths: {},
       servers: [
         {
-          url: 'https://{defaultHost}',
-          variables: {
-            defaultHost: {
-              default: 'www.example.com'
+          url: 'http://localhost:8080/RestAPIFurb'
+        }
+      ],
+      components: {
+        schemas: {
+          produto: {
+            type: 'object',
+            properties: {
+              id: { type: :integer },
+              nome: { type: :string },
+              preco: { type: :integer }
+            }
+          },
+          comanda: {
+            type: 'object',
+            properties: {
+              id: { type: :integer },
+              usuario: { '$ref' => '#/components/schemas/usuario' },
+              itens: {
+                type: :array,
+                items: { '$ref' => '#/components/schemas/item' }
+              },
+              preco_total: { type: :integer }
+            }
+          },
+          usuario: {
+            type: 'object',
+            properties: {
+              usuario_id: { type: :integer },
+              nome: { type: :string },
+              telefone: { type: :string }
+            }
+          },
+          item: {
+            type: 'object',
+            properties: {
+              item_id: { type: :integer },
+              produto_id: { type: :integer },
+              nome: { type: :string },
+              quantidade: { type: :integer },
+              preco: { type: :integer },
+              observacoes: { type: :string }
             }
           }
         }
-      ]
+      }
     }
   }
 
