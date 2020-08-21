@@ -4,14 +4,15 @@ Feita com Ruby on Rails.
 
 ## Como executar
 
+Clone o repositório.
+
 ### Via Docker
 
-Apenas rode `docker-compose up --build` e a API deverá funcionar corretamente na porta `8080`
+Apenas rode `docker-compose up --build` na raiz e a API deverá funcionar corretamente na porta `8080`
 
 ### Localmente
 
-É um aplicativo Ruby on Rails comum, então se certifique de ter a versão 2.6.5 do Ruby.
-- Clone o repositório;
+É um aplicativo Ruby on Rails comum, então se certifique de ter a versão 2.6.5 do Ruby. Rode os seguintes passos na raiz:
 - `bundle install`;
 - `rails db:create`;
 - `rails db:migrate`;
