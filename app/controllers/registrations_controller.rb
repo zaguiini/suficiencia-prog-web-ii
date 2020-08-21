@@ -3,13 +3,16 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     build_resource(sign_up_params)
-
     resource.save
 
-    render 'usuarios/create'
+    if resource.save
+      render 'usuarios/create'
+    else
+      render json: @usuario.errors, status: :bad_request
+    end
   end
 
   def sign_up_params
-    params.except(:usuario).permit(%i[email nome telefone funcao])
+    params.except(:usuario, :funcao, :registration).permit(%i[email nome telefone password])
   end
 end

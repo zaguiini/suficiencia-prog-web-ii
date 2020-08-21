@@ -38,6 +38,36 @@ components:
           type: string
         telefone:
           type: string
+    usuario_logado:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        telefone:
+          type: string
+        email:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        role:
+          type: string
+    usuario_retornado:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        telefone:
+          type: string
+        email:
+          type: string
+        funcao:
+          type: string
     item:
       type: object
       properties:
@@ -279,3 +309,81 @@ paths:
         '204':
           description: Produto apagado
           content: {}
+  "/usuarios/sign_up":
+    post:
+      summary: Criar usuário na API
+      tags:
+      - Usuários
+      parameters: []
+      responses:
+        '200':
+          description: Criado
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/usuario_logado"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                telefone:
+                  type: string
+              required:
+              - nome
+              - telefone
+              - email
+              - password
+  "/usuarios/sign_in":
+    post:
+      summary: Autenticar na API
+      tags:
+      - Usuários
+      description: Role = função. Pode ser admin ou customer. O token está nos headers
+        de resposta. Todas as requisições para /produtos e /comandas dependem do token
+      parameters: []
+      responses:
+        '200':
+          description: Autenticado
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/usuario_logado"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                usuario:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                  required:
+                  - email
+                  - password
+              required:
+              - usuario
+  "/usuarios":
+    get:
+      summary: Listar usuários
+      tags:
+      - Usuários
+      description: Rota apenas para administradores
+      responses:
+        '200':
+          description: Listado com sucesso
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/usuario_retornado"

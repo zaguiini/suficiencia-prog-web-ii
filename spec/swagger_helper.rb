@@ -56,6 +56,28 @@ RSpec.configure do |config|
               telefone: { type: :string }
             }
           },
+          usuario_logado: {
+            type: 'object',
+            properties: {
+              id: { type: :integer },
+              nome: { type: :string },
+              telefone: { type: :string },
+              email: { type: :string },
+              created_at: { type: :string },
+              updated_at: { type: :string },
+              role: { type: :string }
+            }
+          },
+          usuario_retornado: {
+            type: 'object',
+            properties: {
+              id: { type: :integer },
+              nome: { type: :string },
+              telefone: { type: :string },
+              email: { type: :string },
+              funcao: { type: :string }
+            }
+          },
           item: {
             type: 'object',
             properties: {

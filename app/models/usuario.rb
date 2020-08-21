@@ -7,9 +7,9 @@ class Usuario < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
-  validates :nome, length: { minimum: 1 }
-  validates :telefone, length: { is: 11 }
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :nome, presence: true, length: { minimum: 1 }
+  validates :telefone, presence: true, length: { is: 11 }
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
 
   validate :check_role
 
@@ -23,8 +23,7 @@ class Usuario < ApplicationRecord
 
   def check_role
     if funcao.nil?
-      errors.add(:funcao, 'must exist')
-      errors.add(:funcao, "must be #{@@roles.to_s}")
+      self.funcao = :customer
     else
       errors.add(:funcao, 'invalid role') unless @@roles.include?(funcao.to_sym)
     end
