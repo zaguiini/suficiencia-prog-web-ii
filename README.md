@@ -31,7 +31,7 @@ Na rota `http://localhost:8080/api-docs` ou em `./swagger/v1/swagger.yaml`.
 
 - `gerente@lanchonete.com:123456` - administrador;
 - `ze@lanchonete.com:123456` - cliente;
-- `joao@lanchonete.com:123456` - cliente.
+- `maria@lanchonete.com:123456` - cliente.
 
 ### Produtos
 
