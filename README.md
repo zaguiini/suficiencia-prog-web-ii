@@ -51,7 +51,7 @@ Requisição `POST` para `/RestAPIFurb/usuarios/sign_in`:
 }
 ```
 
-Você vai receber o access token que está na resposta da requisição no header `Authorization`. As rotas de produtos comeandas e usuários (no caso de gerente) necessitam desse access token, que deve ser passado da mesma maneira na requisição desejada: `Authorization: Bearer token_aqui`;
+Você vai receber o access token que está na resposta da requisição no header `Authorization`. As rotas de produtos, comandas e usuários (no caso de gerente) necessitam desse access token, que deverá ser passado da mesma maneira na requisição desejada: `Authorization: Bearer token_aqui`;
 
 ## Notas
 
