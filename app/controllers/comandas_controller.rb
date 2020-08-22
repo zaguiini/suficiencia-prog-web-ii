@@ -52,7 +52,7 @@ class ComandasController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def comanda_params
-    permissions = [*(:usuario_id if current_user.is_admin?), itens: %i[id produto_id quantidade preco observacoes]]
+    permissions = [*(:usuario_id if current_user.is_admin?), itens: %i[item_id produto_id quantidade preco observacoes]]
 
     params.except(:comanda, :id).permit(permissions)
   end
@@ -60,7 +60,11 @@ class ComandasController < ApplicationController
   def comanda_model_params
     {
       usuario_id: comanda_params[:usuario_id] || current_user.id,
-      itens_attributes: comanda_params[:itens]
+      itens_attributes: comanda_params[:itens]&.map do |item|
+        item[:id] = item.delete :item_id
+
+        item
+      end
     }.compact
   end
 end
